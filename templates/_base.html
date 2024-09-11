@@ -9,17 +9,59 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content=
 		"width=device-width, initial-scale=1.0">
-	<title>Django + Tailwind CSS</title>
+	<title>{% block title %}Untitled{% endblock %}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Athiti&display=swap" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
 
 	{% compress css %}
 	<link rel="stylesheet"
 		href="{% static 'src/output.css' %}">
 	{% endcompress %}
+	<script>
+		function ThaiDateTime(date){
+			let monthNames =[
+			"มกราคม","กุมภาพันธ์",
+			"มีนาคม","เมษายา",
+			"พฤษภาคม" ,"มิถุนายน",
+			"กรกฎาคม" , "สิงหาคม",
+			"กันยายน", "ตุลาคม",
+			"พฤศจิกายน","ธันวาคม"
+			];
 
+			let year = date.getFullYear() + 543;
+            let month = monthNames[date.getMonth()];
+            let numOfDay = date.getDate();
+
+            let hours = date.getHours().toString().padStart(2, "0");
+            let minutes = date.getMinutes().toString().padStart(2, "0");
+            let seconds = date.getSeconds().toString().padStart(2, "0");
+
+            return `${numOfDay} ${month} ${year} ${hours}:${minutes}:${seconds} น.`;
+		}
+	
+		setInterval(UpdateTime,1000);//#สร้างเวลาให้อัพเดทหน่วยเป้นมิลิ
+		function UpdateTime(){
+			let now = ThaiDateTime(new Date());
+			document.getElementById('currentDataTime').innerHTML = now;
+		}
+		function DisplayTable(state){
+			document.getElementById('myTable').style.visibility = state;
+		}
+		function calAverage(){
+			let n1 = Number.parseInt(document.getElementById('num1').value);
+			let n2 = Number.parseInt(document.getElementById('num2').value);
+			let n3 = Number.parseInt(document.getElementById('num3').value);
+			let r = (n1 + n2 +n3) / 3;
+			document.getElementById('result').innerHTML = "ค่าเฉลี่ย" +r ;
+
+		}
+	</script>
 </head>
 
-<body class="bg-red-300"> 
-	<div class="container mx-auto mt-4">
+<body>
+	<div class="container mx-auto px-4 py-4">
 		{% block content %}
 		{% endblock content %}
 	</div>
